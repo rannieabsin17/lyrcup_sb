@@ -16,7 +16,7 @@ A sleek, modern, and animated HTML/CSS scoreboard designed for live sports event
 -  Placeholder for player images (profile-style)
 -  Polygonal clipping and clean layout for modern look
 
-## 📁 File Structure
+## File Structure
 
 project-root/
 │
@@ -87,7 +87,7 @@ const data = {
 };
 ```
 
-## 🧪 Demo Controls
+## Demo Controls
 
 Use the buttons at the top right (`Show RAW Scorer`, `Show BAT Scorer`) to trigger sample scorer notifications.
 
