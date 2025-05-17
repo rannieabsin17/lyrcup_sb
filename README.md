@@ -1,9 +1,4 @@
-Certainly! Here's the complete `README.md` content in a single, ready-to-use Markdown file:
-
----
-
-```markdown
-# Scoreboard UI
+# LYRCUP x ULTISCORE Scoreboard UI
 
 A sleek, modern, and animated HTML/CSS scoreboard designed for live sports events. This UI supports team branding, score display, timer, and animated goal notifications.
 
