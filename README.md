@@ -11,17 +11,6 @@ A sleek, modern, and animated HTML/CSS scoreboard designed for live sports event
 -  Placeholder for player images (profile-style)
 -  Polygonal clipping and clean layout for modern look
 
-## File Structure
-
-project-root/
-│
-├── index.html          # Main HTML file
-├── img/
-│   ├── team\_logo\_left.png
-│   └── team\_logo\_right.png
-├── logo.jpg            # Main logo (optional)
-└── README.md           # This file
-
 ## How to Use
 
 1. Clone or download this repo.
