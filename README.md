@@ -22,9 +22,7 @@ project-root/
 ├── logo.jpg            # Main logo (optional)
 └── README.md           # This file
 
-````
-
-## 🚀 How to Use
+## How to Use
 
 1. Clone or download this repo.
 2. Place team logos inside the `img/` folder.
