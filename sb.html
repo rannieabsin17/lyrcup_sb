@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoreboard UI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 100;
+      font-style: normal;
+    }
+    .container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .scoreboard-bg {
+      position: relative;
+      height: 65px;
+      width: 1085px;
+      background: white;
+      clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scoreboard {
+      display: flex;
+      height: 60px;
+      width: 1080px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      clip-path: polygon(4% 0, 99.75% 0, 96% 100%, 0.35% 100%);
+    }
+
+    .section {
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      height: 100%;
+      border: 1px solid #aaa;
+    }
+
+    .logo-section {
+      background: url("logo.jpg") no-repeat top right;
+      background-size: 260px;
+      margin-left: 0;
+      width: 160px;
+    }
+
+    .team-box {
+      width: 220px;
+      margin: 0 10px;
+    }
+
+    .team-left {
+      background: 
+        linear-gradient(to right, rgba(176, 0, 32, 0.8), rgba(176, 0, 32, 0.8)),
+        url("img/team_logo_left.png") left center / 160px no-repeat;
+      background-size: 160px;
+      color: white;
+      gap: 10px;
+    }
+
+    .team-right {
+      background: 
+        linear-gradient(to left, rgba(51, 51, 51, 0.8), rgba(51, 51, 51, 0.8)),
+        url("img/team_logo_right.png") right center / 160px no-repeat;
+      color: white;
+      background-size: 160px;
+      gap: 10px;
+    }
+
+    .score {
+      font-size: 48px;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 5vw;
+      text-align: center;
+      padding: 5vw 10px;
+      margin: 0 -15px;
+    }
+
+    .time-box {
+      background: #1a1a1a;
+      color: white;
+      font-size: 42px;
+      width: 120px;
+      align-items: center;
+      justify-content: center;
+      padding-left: 20px;
+      padding-top: 2.25px;
+      border-right: #1a1a1a solid 0px;
+    }
+
+    .team-name {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    /* Scorer Info Box */
+    #scorerInfo {
+      position: absolute;
+      bottom: 90px;
+      width: 60vw;
+      padding: 15px 20px;
+      color: white;
+      font-size: 22px;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      display: none;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    #scorerInfo img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    #scorerText {
+      font-size: 24px;
+    }
+
+    #assistText {
+      font-size: 20px;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+
+    /* Demo buttons */
+    .buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .buttons button {
+      margin-right: 10px;
+      font-size: 16px;
+      padding: 6px 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scorer Info Div -->
+  <div id="scorerInfo">
+    <img id="playerImage" src="https://via.placeholder.com/60x60.png?text=IMG" alt="Player">
+    <div>
+      <div id="scorerText">GOAL BY:</div>
+      <div id="assistText">ASSISTED BY:</div>
+    </div>
+  </div>
+  <!-- Scoreboard Container -->
+  <div class="container">
+      <div class="scoreboard-bg">
+        <div class="scoreboard">
+            <div class="section logo-section"></div>
+            <div class="section team-left">
+                <div class="team-name team-box" style="text-align: right; padding-right : 7.5px;">RAW</div>
+                <div class="score">00</div>
+            </div>
+            <div class="section team-right">
+                <div class="score">00</div>
+                <div class="team-name team-box" style="text-align: left; padding-left: 7.5px;">BAT</div>
+            </div>
+            <div class="section time-box">60:00</div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- Demo Buttons -->
+  <div class="buttons">
+    <button onclick="showScorer('RAW')">Show RAW Scorer</button>
+    <button onclick="showScorer('BAT')">Show BAT Scorer</button>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function showScorer(team) {
+      const scorerDiv = document.getElementById("scorerInfo");
+      const scorerText = document.getElementById("scorerText");
+      const assistText = document.getElementById("assistText");
+      const playerImage = document.getElementById("playerImage");
+
+      // Example data
+      const data = {
+        RAW: {
+          scorer: "John Doe",
+          assist: "Mike Smith",
+          color: "#b00020",
+          image: "https://via.placeholder.com/60x60.png?text=RAW"
+        },
+        BAT: {
+          scorer: "Jane Lee",
+          assist: "Chris Ray",
+          color: "#333",
+          image: "https://via.placeholder.com/60x60.png?text=BAT"
+        }
+      };
+
+      const info = data[team];
+      scorerText.textContent = `GOAL BY: ${info.scorer}`;
+      assistText.textContent = `ASSISTED BY: ${info.assist}`;
+      scorerDiv.style.backgroundColor = info.color;
+      playerImage.src = info.image;
+
+      scorerDiv.style.display = "flex";
+      requestAnimationFrame(() => {
+        scorerDiv.style.opacity = "1";
+        scorerDiv.style.transform = "translateY(0)";
+      });
+
+      setTimeout(() => {
+        scorerDiv.style.opacity = "0";
+        scorerDiv.style.transform = "translateY(20px)";
+        setTimeout(() => {
+          scorerDiv.style.display = "none";
+        }, 500);
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
