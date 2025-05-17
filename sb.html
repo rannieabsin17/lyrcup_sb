@@ -178,8 +178,8 @@
   <div id="scorerInfo">
     <img id="playerImage" src="https://via.placeholder.com/60x60.png?text=IMG" alt="Player">
     <div>
-      <div id="scorerText">GOAL BY:</div>
-      <div id="assistText">ASSISTED BY:</div>
+      <div id="scorerText">GOAL:</div>
+      <div id="assistText">ASSISTED:</div>
     </div>
   </div>
   <!-- Scoreboard Container -->
@@ -232,8 +232,8 @@
       };
 
       const info = data[team];
-      scorerText.textContent = `GOAL BY: ${info.scorer}`;
-      assistText.textContent = `ASSISTED BY: ${info.assist}`;
+      scorerText.textContent = `GOAL:   ${info.scorer}`;
+      assistText.textContent = `ASSIST :   ${info.assist}`;
       scorerDiv.style.backgroundColor = info.color;
       playerImage.src = info.image;
 
