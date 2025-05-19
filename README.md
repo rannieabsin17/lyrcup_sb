@@ -17,7 +17,7 @@ A sleek, modern, and animated HTML/CSS scoreboard designed for live sports event
 2. Place team logos inside the `img/` folder.
 3. Open `index.html` in any modern web browser.
 
-## ⚙️ Customization
+## Customization
 
 ### Team Names
 Edit directly in the HTML:

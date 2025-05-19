@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Scoreboard UI</title>
+  <!--
+  This code dynamically loads team name, color, logo, and abbreviation upon file onload.
+  This approach minimizes the need for hardcoding these values directly in the HTML.
+  The buttons are for testing purposes only. Their functions should be triggered by web socket events in a production environment.
+  -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,8 +78,7 @@
     }
 
     .team-left {
-      background: 
-        linear-gradient(to right, rgba(176, 0, 32, 0.8), rgba(176, 0, 32, 0.8)),
+      background:
         url("img/team_logo_left.png") left center / 160px no-repeat;
       background-size: 160px;
       color: white;
@@ -82,8 +86,7 @@
     }
 
     .team-right {
-      background: 
-        linear-gradient(to left, rgba(51, 51, 51, 0.8), rgba(51, 51, 51, 0.8)),
+      background:
         url("img/team_logo_right.png") right center / 160px no-repeat;
       color: white;
       background-size: 160px;
@@ -188,12 +191,12 @@
         <div class="scoreboard">
             <div class="section logo-section"></div>
             <div class="section team-left">
-                <div class="team-name team-box" style="text-align: right; padding-right : 7.5px;">RAW</div>
+                <div class="team-name team-box" style="text-align: right; padding-right : 7.5px;"></div>
                 <div class="score">00</div>
             </div>
             <div class="section team-right">
                 <div class="score">00</div>
-                <div class="team-name team-box" style="text-align: left; padding-left: 7.5px;">BAT</div>
+                <div class="team-name team-box" style="text-align: left; padding-left: 7.5px;"></div>
             </div>
             <div class="section time-box">60:00</div>
         </div>
@@ -201,14 +204,106 @@
   </div>
 
 
-  <!-- Demo Buttons -->
+  <!-- Demo Buttons - These are for testing purposes only and should be triggered by web socket events -->
   <div class="buttons">
     <button onclick="showScorer('RAW')">Show RAW Scorer</button>
     <button onclick="showScorer('BAT')">Show BAT Scorer</button>
   </div>
 
+:start_line:210
+-------
   <!-- Script -->
+
   <script>
+    // Team data object containing information for the left and right teams.
+    const teamData = {
+      left: {
+        name: 'RAW',
+          logo: 'img/team_logo_left.png',
+          color: '#b00020',
+          abbreviation: null // Example of missing abbreviation
+        },
+        right: {
+          name: 'BAT',
+          logo: 'img/team_logo_right.png',
+          color: 'rgb(51, 51, 51)',
+          abbreviation: 'BAT'
+        }
+      };
+
+    /**
+     * Converts a hexadecimal color code to an RGB color code.
+     * @param {string} hex The hexadecimal color code (e.g., "#b00020").
+     * @returns {string|null} The RGB color code (e.g., "rgb(176, 0, 32)") or null if the input is invalid.
+     */
+    function hexToRgb(hex) {
+      // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+      var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+      hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+      });
+
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
+    }
+
+    /**
+     * Generates a team abbreviation from the team name.
+     * @param {string} teamName The name of the team.
+     * @returns {string} The generated abbreviation (up to 3 consonants).
+     */
+    function generateAbbreviation(teamName) {
+      const consonants = teamName.toUpperCase().replace(/[^A-Z]/g, '').replace(/[AEIOU]/g, '');
+      return consonants.substring(0, 3);
+    }
+
+    /**
+     * Loads team data (name, logo, color, abbreviation) and applies it to the scoreboard.
+     * This function is called when the window is loaded.
+     */
+    function loadTeamData() {
+      const teamLeftElement = document.querySelector('.team-left');
+      const teamRightElement = document.querySelector('.team-right');
+      const teamNameLeftElement = teamLeftElement.querySelector('.team-name');
+      const teamNameRightElement = teamRightElement.querySelector('.team-name');
+      const logoSection = document.querySelector('.logo-section');
+
+      // Left Team
+      let leftTeam = teamData.left;
+      teamNameLeftElement.textContent = leftTeam.name;
+
+      // Check and convert color to RGB
+      let leftColor = leftTeam.color;
+      if (leftColor.startsWith('#')) {
+        leftColor = hexToRgb(leftColor);
+      }
+      const rgbLeft = leftColor.substring(4, leftColor.length-1).replace(/ /g, '').split(',');
+      teamLeftElement.style.background = `linear-gradient(to right, rgba(${rgbLeft[0]}, ${rgbLeft[1]}, ${rgbLeft[2]}, 0.5), rgba(${rgbLeft[0]}, ${rgbLeft[1]}, ${rgbLeft[2]}, 0.5)), url("${leftTeam.logo}") left center / 160px no-repeat`;
+      teamLeftElement.style.backgroundSize = '160px';
+
+      // Generate abbreviation if not provided
+      if (!leftTeam.abbreviation) {
+        leftTeam.abbreviation = generateAbbreviation(leftTeam.name);
+      }
+
+      // Right Team
+      let rightTeam = teamData.right;
+      teamNameRightElement.textContent = rightTeam.name;
+
+      // Check and convert color to RGB
+      let rightColor = rightTeam.color;
+      if (rightColor.startsWith('#')) {
+        rightColor = hexToRgb(rightColor);
+      }
+      const rgbRight = rightColor.substring(4, rightColor.length-1).replace(/ /g, '').split(',');
+      teamRightElement.style.background = `linear-gradient(to left, rgba(${rgbRight[0]}, ${rgbRight[1]}, ${rgbRight[2]}, 0.5), rgba(${rgbRight[0]}, ${rgbRight[1]}, ${rgbRight[2]}, 0.5)), url("${rightTeam.logo}") right center / 160px no-repeat`;
+      teamRightElement.style.backgroundSize = '160px';
+    }
+
+    /**
+     * Displays the scorer information in the scorer info div.
+     * @param {string} team The team to display the scorer information for (e.g., "RAW", "BAT").
+     */
     function showScorer(team) {
       const scorerDiv = document.getElementById("scorerInfo");
       const scorerText = document.getElementById("scorerText");
@@ -251,6 +346,10 @@
         }, 500);
       }, 5000);
     }
+
+    // Call loadTeamData when the window is loaded.
+    window.onload = loadTeamData;
+
   </script>
 
 </body>
