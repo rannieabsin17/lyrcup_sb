@@ -110,7 +110,7 @@
       width: 120px;
       align-items: center;
       justify-content: center;
-      padding-left: 20px;
+      padding-left: 0px;
       padding-top: 2.25px;
       border-right: #1a1a1a solid 0px;
     }
@@ -207,11 +207,10 @@
   <!-- Demo Buttons - These are for testing purposes only and should be triggered by web socket events -->
   <div class="buttons">
     <button onclick="showScorer('RAW')">Show RAW Scorer</button>
-    <button onclick="showScorer('BAT')">Show BAT Scorer</button>
+    <button onclick="showScorer('BAT')">Show SP Scorer</button>
   </div>
 
-:start_line:210
--------
+
   <!-- Script -->
 
   <script>
@@ -224,10 +223,10 @@
           abbreviation: null // Example of missing abbreviation
         },
         right: {
-          name: 'BAT',
+          name: 'SP',
           logo: 'img/team_logo_right.png',
-          color: 'rgb(51, 51, 51)',
-          abbreviation: 'BAT'
+          color: '#f44e14',
+          abbreviation: 'SP'
         }
       };
 
